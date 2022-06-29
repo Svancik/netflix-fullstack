@@ -135,5 +135,19 @@ Pomocí linear gradient  si nastavíme u background obrázku přechod stínu. */
     ),
     url("https://cdn.hipwallpaper.com/i/98/21/dUyCkp.jpg"); /*
 
+----------------------------------------------------------------------------------------------------------------
+G1) REACT LOGIN PAGE DESIGN
+Kopie Register page s mírnou úpravou.
 
-E1) REACT LOGIN PAGE DESIGN
+BACKEND
+PROBLÉM S INTEGRACÍ FE & BE
+Nyní řeším takto:
+    - založení nového repozitáře GIT
+    - stáhnutí client repozitáře jak .zip 
+    - vytvoření nové složky / projektu
+    - vložení clientu složek z .zip 
+    - napojení na nový repozitář GIT
+
+-------------------------------------------------------------------------------------------------------------------------
+H1) Instalace knihoven k projektu
+npm i express mongoose nodemon dotenv jsonwebtoken
