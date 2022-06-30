@@ -151,3 +151,32 @@ Nyní řeším takto:
 -------------------------------------------------------------------------------------------------------------------------
 H1) Instalace knihoven k projektu
 npm i express mongoose nodemon dotenv jsonwebtoken
+
+Jak nastavit abychom nemuseli při každé změně dělat node index.js?
+ZMĚNÍME SCRIPTS v package.json:
+// api/package.json
+Původní: */
+"scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1"
+}, /*
+Nové:
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+
+I0) NODE.JS MONGODB CONNECTION */
+//api/.env
+MONGO_URL = mongodb+srv://radek:radek@mern.ba4yo.mongodb.net/?retryWrites=true&w=majority
+//api/index.js
+const express = require("express");
+const app = express();
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+dotenv.config();
+main().catch(err => console.log(err));
+async function main() {
+  await mongoose.connect(process.env.MONGO_URL).then(()=>console.log("DB Connection Successfull")).catch(err=>console.log(err));
+}
+app.listen(8800, ()=>{
+    console.log("Backend server is running!");
+})
