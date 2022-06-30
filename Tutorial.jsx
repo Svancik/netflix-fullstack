@@ -164,6 +164,8 @@ Nové:
     "test": "nodemon index.js"
   },
 
+
+--------------------------------------------------------------------------------- 
 I0) NODE.JS MONGODB CONNECTION */
 //api/.env
 MONGO_URL = mongodb+srv://radek:radek@mern.ba4yo.mongodb.net/?retryWrites=true&w=majority
@@ -179,4 +181,25 @@ async function main() {
 }
 app.listen(8800, ()=>{
     console.log("Backend server is running!");
-})
+}); /*
+
+
+----------------------------------------------------------------------------------------------------------------------------
+J0) REST API MODELS
+Vytvoříme si referenční schéma pomocí mongoose knihovny - viz ukážka níže: */
+//api/models/List.js
+const mongoose = require("mongoose");
+const UserSchema = new mongoose.Schema({
+    username:{type:String, required: true, unique:true},
+    email:{type:String, required: true, unique:true},
+    password:{type:String, required: true},
+    profilePic:{type:String, default:""},
+    isAdmin:{type: Boolean, default: false},
+},{timestamps: true}
+);
+module.export = mongoose.model("User", UserSchema); /*
+
+Obdobně to uděláme i u ostatních modelů v souborech Movie.js & List.js
+
+------------------------------------------------------------------------------------------------------------------
+K0) REST API ROUTES
