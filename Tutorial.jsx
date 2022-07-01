@@ -197,9 +197,16 @@ const UserSchema = new mongoose.Schema({
     isAdmin:{type: Boolean, default: false},
 },{timestamps: true}
 );
-module.export = mongoose.model("User", UserSchema); /*
+module.exports = mongoose.model("User", UserSchema); /*
 
 Obdobně to uděláme i u ostatních modelů v souborech Movie.js & List.js
 
 ------------------------------------------------------------------------------------------------------------------
 K0) REST API ROUTES
+JAK NASTAVIT SPECIFICKY DO KTERÉ DATABÁZE SE BUDOU DATA UKLÁDAT V MONGODB?
+
+Je třeba specifikovat parametr dbName:*/ 
+async function main() {
+  await mongoose.connect(process.env.MONGO_URL, {dbName: "netflix"}).then(()=>console.log("DB Connection Successfull")).catch(err=>console.log(err));
+}
+/*
