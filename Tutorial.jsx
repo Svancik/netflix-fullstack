@@ -211,6 +211,7 @@ async function main() {
 }
 /*
 
+---------------------------------------------------------------------------------------------------------------------------
 L0) LOGIN WITH JWT AUTHENTICATION
 a) Naprogramování Loginu bez JWT */
 //api/routes/auth.js
@@ -247,3 +248,55 @@ CO CHCEME ULOŽIT DO JWT?
   res.status(200).json({...info, accessToken}); /*
 
 Hotovo: Nyní máme hotovou login route + JWT token vracíme v response v případě úspěšného přihlášení.
+
+-----------------------------------------------------------------------------------------------------------
+M0) REST API CRUDE OPERATIONS (users.js)
+Toto nebudu moc komentovat jelikož je to podobné s projektem RadekSocials.
+
+a) Vytvoříme si nový soubor verifyToken.js kde budeme verifikovat JWT token
+Jak získáme JWT token?
+  - Budeme ho posílat v headeru požadavku CRUD operací (abychom legitimovali že daná osoba může dělat CRUD operace) 
+  
+b) Ověřování JWT provedeme pomocí kódu níže v souboru verifyToken.js*/
+//V routes provádíme middleware akce, verify je další middleware akce kdy do fce vstupuje req, res a next (následující middleware fce)
+//verifyToken.js
+function verify(req, res, next){
+  const authHeader = req.headers.token;
+  //zkontrolujeme zda authHeader (JWT token) se skutečně nachází v hlavičce požadavku 
+  if (authHeader) {
+      //v hlavičce se nachází "Bearer 16546454a" - potřebujeme separovat text Bearer od JWT - proto split níže a volíme 2. slovo
+      const token = authHeader.split(" ")[1];
+      //pokud bude verify úspěšně tak dešifrujeme data které jsme vložili do JWT = user._id & user.isAdmin => to uložíme do user níže
+      jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
+          if (err) res.status(403).json("Token is not valid!");
+          req.user = user;
+          //(req, res) předáváme díky next() další middleware fci což je 1 z CRUD operací v users.js kde byl tento soubor volán.
+          next();
+      });
+  } else{
+      return res.status(401).json("You are not authenticated to preform this operation!");
+  }
+}/*
+
+c) V CRUD operace UPDATE následné voláme verify soubor tzn. že následně z routeru předáváme data do async UPDATE fce.
+Více informací jak next() funguje je zde - https://stackoverflow.com/questions/11103465/how-does-next-work-in-node-js */
+//users.js
+const verify = require("../verifyToken");
+//UPDATE
+router.put("/:id", verify, async (req,res) => {
+  if(req.user.id === req.params.id || req.user.isAdmin){
+      //pokud updatujeme heslo (tzn. je v body requestu) tak musíme opět nové heslo zašifrovat
+      if(req.body.password){
+          req.body.password = CryptoJS.AES.encrypt(req.body.password, process.env.SECRET_KEY).toString();
+      }
+      try {
+          //pomocí kódu níže $đet req.body budou updatována všechna data kde bude shoda s tělem požadavku a nějaká změna. Díky new vrátí nového usera.
+          const updatedUser = await User.findByIdAndUpdate(req.params.id, {$set: req.body},{new:true});
+          res.status(200).json(updatedUser);
+      } catch (error) {
+          res.status(500).json(error);
+      }
+  } else{
+      res.status(403).json("You can update only your account!")
+  }
+  });
