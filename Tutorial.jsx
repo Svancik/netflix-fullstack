@@ -331,6 +331,38 @@ router.get("/stats", async (req,res) =>{
       res.status(500).json(error);
   }
 }); /*
-
+-------------------------------------------------------------------------------------------
 N0) REST API MOVIE CRUD OPERATIONS (movie.js)
+Budeme vytvářet CRUD REST API operace + získání náhodného filmu (ten co je na úvodní stránce)
+
+-------------------------------------------------------------------------------------------
+O0) REST API LIST CRUD OPERATIONS (list.js)
+Budeme dělat operace se seznamy filmů.
+Pomocí kódu níže dokážeme na základě odkazu (http://localhost:8800/api/lists?type=movie&genre=anime) získat seznam filmů dle parametrů. */
+
+//api/routes/lists.js
+router.get("/", verify, async (req,res)=>{
+  const typeQuery = req.query.type;   // zkontrolujeme zda v URL je query pro typ (movie / series)=> když není tak úvodní stránka
+  const genreQuery = req.query.genre;
+  let list = [];
+
+  try {
+      if(typeQuery){  //pokud jsme si zvolili movies/series
+          if(genreQuery){ //pokud jsme si zvolili žánr u movies/series
+              list = await List.aggregate([{$sample:{size:10}}, {$match:{type:typeQuery, genre:genreQuery}}])
+          }
+          else{
+              list = await List.aggregate([{$sample:{size:10}}, {$match:{type:typeQuery}}])
+          }
+      } 
+      else{ //pokud jsme si nezvolili nic => úvodní obrazovka
+          list = await List.aggregate([{$sample:{size:10}}])
+      }
+  res.status(200).json(list);
+  } catch (error) {
+      res.status(500).json(error);
+  }
+});/*
+
+
 
