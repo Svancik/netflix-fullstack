@@ -250,7 +250,7 @@ CO CHCEME ULOŽIT DO JWT?
 Hotovo: Nyní máme hotovou login route + JWT token vracíme v response v případě úspěšného přihlášení.
 
 -----------------------------------------------------------------------------------------------------------
-M0) REST API CRUDE OPERATIONS (users.js)
+M0) REST API USER CRUDE OPERATIONS (users.js)
 Toto nebudu moc komentovat jelikož je to podobné s projektem RadekSocials.
 
 a) Vytvoříme si nový soubor verifyToken.js kde budeme verifikovat JWT token
@@ -299,4 +299,9 @@ router.put("/:id", verify, async (req,res) => {
   } else{
       res.status(403).json("You can update only your account!")
   }
-  });
+  }); /*
+
+d) Další CRUDE operace spočívá v získání dat o userech - kolik se jich registrovalo v dané měsíce.
+  - musíme agregovat všechny uživately napříč všemi měsíci - využijeme k tomu agregační fce
+  - více o agregačních fcí lze dohledat zde https://www.mongodb.com/docs/manual/reference/operator/aggregation/project/
+  
