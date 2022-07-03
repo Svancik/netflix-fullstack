@@ -250,7 +250,7 @@ CO CHCEME ULOŽIT DO JWT?
 Hotovo: Nyní máme hotovou login route + JWT token vracíme v response v případě úspěšného přihlášení.
 
 -----------------------------------------------------------------------------------------------------------
-M0) REST API USER CRUDE OPERATIONS (users.js)
+M0) REST API USER CRUD OPERATIONS (users.js)
 Toto nebudu moc komentovat jelikož je to podobné s projektem RadekSocials.
 
 a) Vytvoříme si nový soubor verifyToken.js kde budeme verifikovat JWT token
@@ -303,5 +303,34 @@ router.put("/:id", verify, async (req,res) => {
 
 d) Další CRUDE operace spočívá v získání dat o userech - kolik se jich registrovalo v dané měsíce.
   - musíme agregovat všechny uživately napříč všemi měsíci - využijeme k tomu agregační fce
-  - více o agregačních fcí lze dohledat zde https://www.mongodb.com/docs/manual/reference/operator/aggregation/project/
-  
+  - více o agregačních fcí lze dohledat zde https://www.mongodb.com/docs/manual/reference/operator/aggregation/project/ */
+
+//GET USER STATS (No. users / month)
+router.get("/stats", async (req,res) =>{
+  const today = new Date();
+  const lastYear = today.setFullYear(today.setFullYear() - 1);
+
+  try {
+      // Pomocí kódu níže získáme počet uživatelů za daný měsíc díky agregační funkci MongoDB
+      const data = await User.aggregate([
+          {
+              //project nám označuje jaké data (fields) budem chtít zobrazit - více zde 
+              $project:{
+                  month: {$month: "$createdAt"}   //pomocí $month získáme z timestampu měsíc ze sloupce "createdAt" (jde takto i $year)
+              }
+          },
+          {
+              $group: {
+                  _id: "$month",  //zde nastavujeme že seskupujeme podle měsíců které jsme získali v kódu výše
+                  total: {$sum:1}, //zobrazujeme totální součet všech uživatelů v daném měsíci který jsme seskupili na řádku výše
+              },
+          },
+      ]);
+      res.status(200).json(data);
+  } catch (error) {
+      res.status(500).json(error);
+  }
+}); /*
+
+N0) REST API MOVIE CRUD OPERATIONS (movie.js)
+
