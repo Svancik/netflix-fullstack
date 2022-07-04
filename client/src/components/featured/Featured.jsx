@@ -1,7 +1,29 @@
 import { InfoOutlined, PlayArrow } from "@mui/icons-material";
 import "./featured.scss";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Featured({ type }) {
+  const [content, setContent] = useState({});
+
+  useEffect(() => {
+    const getRandomContent = async () => {
+      try {
+        //níže dáváme do query pro selekci náhodného filmu, že pokud máme zvolený typ film, tak chceme náhodně vybírat z filmů.
+        const res = await axios.get(`/movies/random?type=${type}`, {
+          headers: {
+            token:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYmY3NDQwNWU2N2YxNGJjZDQ1ZDBlYiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1Njk1OTcwMSwiZXhwIjoxNjU3MzkxNzAxfQ.5Z451LZ2F1t8BIHgl546F-owiEqJOartZFq-tDFzL7c",
+          },
+        });
+        //Níže volíme první element, jelikož nám server vrátí pole - my chceme však objekt = 1 element z 1
+        setContent(res.data[0]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getRandomContent();
+  }, [type]);
   return (
     <div className="featured">
       {type && (
@@ -25,18 +47,16 @@ export default function Featured({ type }) {
           </select>
         </div>
       )}
-      <img src="https://images7.alphacoders.com/969/969444.png" alt="" />
+      {/* <img src="https://images7.alphacoders.com/969/969444.png" alt="" /> */}
+      <img src={content.img} alt="" />
       <div className="info">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Berserk_anime_logo.png"
-          alt=""
-        />
-        <span className="desc">
-          In this world, is the destiny of mankind controlled by some
+        {/* <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Berserk_anime_logo.png" alt=""> 
+        In this world, is the destiny of mankind controlled by some
           transcendental entity or law? Is it like the hand of God hovering
           above? At least it is true that man has no control, even over his own
-          will...
-        </span>
+          will...*/}
+        <img src={content.imgTitle} alt="" />
+        <span className="desc">{content.desc}</span>
         <div className="buttons">
           <button className="play">
             <PlayArrow />
