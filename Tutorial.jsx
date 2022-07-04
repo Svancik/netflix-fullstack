@@ -367,6 +367,25 @@ router.get("/", verify, async (req,res)=>{
 
 -------------------------------------------------------------------------------------------------------------------------------
 N0) REACT ROUTER DOM
+Hotovo
+
+Pokračovat v 1:53:36
+
+---------------------------------------------------------------------------------------------------------------------------------
+M0) REACT FETCH DATA FROM API 
+K připojení na BE server použijeme axios a napíšeme proxy do package.json - na konec.
+/*
+
+Opět problém napojení FE a BE => DÍKY CORS!
+JAK VYŘEŠIT NAVŽDY PROBLÉM S CORS:
+
+1. Nainstalovat cors do serveru / api: 
+    - npm install cors
+2. Vložit kód níže na začátek kódu index.js */
+    const cors = require('cors');
+    app.use(cors());/*
+
+HOTOVO! PROBLÉM VYŘEŠEN! 
 
 
 
