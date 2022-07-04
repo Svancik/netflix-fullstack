@@ -366,13 +366,13 @@ router.get("/", verify, async (req,res)=>{
 
 
 -------------------------------------------------------------------------------------------------------------------------------
-N0) REACT ROUTER DOM
+P0) REACT ROUTER DOM
 Hotovo
 
 Pokračovat v 1:53:36
 
 ---------------------------------------------------------------------------------------------------------------------------------
-M0) REACT FETCH DATA FROM API 
+Q0) REACT FETCH DATA FROM API 
 K připojení na BE server použijeme axios a napíšeme proxy do package.json - na konec.
 /*
 
@@ -388,4 +388,18 @@ JAK VYŘEŠIT NAVŽDY PROBLÉM S CORS:
 HOTOVO! PROBLÉM VYŘEŠEN! 
 
 
+------------------------------------------------------------------------------------------------------------------------------------
+R0) REACT NETFLIX WATCH PAGE (přesměrování na watch page) 
+Chceme přesměrovat uživatele na fullscreen video filmu který si zvolí v seznamu.
+To provedeme tím že ho odkážeme na odkaz /watch ALE ZÁROVEŇ PŘEDÁME OBJEKT MOVIE*/
+
+// a) V komponentě ListItem kde klikáme na položku movie a jsme odsud přesměrování na /watch použijeme useNavigate HOOK
+  const navigate = useNavigate();
+// b) Pomocí useNavigate nastavíme akci pro div do které když user klikne tak je přesměrován na /watch a do state vložíme objekt movie
+  <div onClick={() => { navigate("/watch", { state: { movie } }); }}> <ListItem/></div>
+// c) V komponentě Watch.jsx (kam nás routne App.js když v url je "/watch") použijeme useLocation HOOK
+  const { state } = useLocation();
+// d) Pomcí state.movie můžeme nyní přístupnit movie v Watch.jsx které jsme pomocí HOOKŮ useNavigate & useLocation odeslali z ListItem.jsx
+    console.log(state.movie);
+    
 

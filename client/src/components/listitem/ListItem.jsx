@@ -7,12 +7,14 @@ import {
 import axios from "axios";
 import { useState, useEffect } from "react";
 import "./listItem.scss";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 //Do komponenty nám vstupuje index (umístění v sidebaru) a item, item = id filmu který je uložen v seznamu (lists).
 //Musíme tedy na základě id (=item) tohoto movie získat movie z mongoDb pomocí axios.get("/movies/find") a uložit výsledek do state.
 export default function ListItem({ index, item }) {
   const [isHovered, setIsHovered] = useState(false);
   const [movie, setMovie] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getMovie = async () => {
@@ -33,6 +35,9 @@ export default function ListItem({ index, item }) {
 
   return (
     <div
+      onClick={() => {
+        navigate("/watch", { state: { movie } });
+      }}
       className="listItem"
       style={{ left: isHovered && index * 225 - 50 + index * 2.5 }}
       onMouseEnter={() => setIsHovered(true)}
