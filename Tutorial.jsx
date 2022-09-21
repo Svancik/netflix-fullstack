@@ -403,3 +403,16 @@ To provedeme tím že ho odkážeme na odkaz /watch ALE ZÁROVEŇ PŘEDÁME OBJE
     console.log(state.movie);
     
 
+/*
+T0) JAK NAKLONOVAT GIT PROJEKT 
+
+a) Vytvoření branch (nebo použití main)
+b) tečkou na konci zvolíme že chceme kopii do nynějšího adresáře
+
+ git clone --single-branc -b react-admin https://github.com/Svancik/admin-dashboard-FE.git .
+
+
+*/
+
+
+ 
