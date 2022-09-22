@@ -43,7 +43,7 @@ router.post("/login", async (req, res) => {
         //po verifikaci hesla & username vložíme do JWT tokenu user._id & user.isAdmin => po 5 dnech nebude JWT validní => znovu login
         const accessToken = jwt.sign({id: user._id, isAdmin: user.isAdmin}, process.env.SECRET_KEY,{expiresIn: "5d"});
         //tento token přidáme k res.status(200).json pomocí spread operátoru - viz níže.
-        
+        console.log(accessToken);
         res.status(200).json({...info, accessToken});
 
     } catch(err){

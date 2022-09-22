@@ -12,8 +12,7 @@ export default function Featured({ type }) {
         //níže dáváme do query pro selekci náhodného filmu, že pokud máme zvolený typ film, tak chceme náhodně vybírat z filmů.
         const res = await axios.get(`/movies/random?type=${type}`, {
           headers: {
-            token:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYmY3NDQwNWU2N2YxNGJjZDQ1ZDBlYiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1Njk1OTcwMSwiZXhwIjoxNjU3MzkxNzAxfQ.5Z451LZ2F1t8BIHgl546F-owiEqJOartZFq-tDFzL7c",
+            token: process.env.REACT_APP_TOKEN,
           },
         });
         //Níže volíme první element, jelikož nám server vrátí pole - my chceme však objekt = 1 element z 1
