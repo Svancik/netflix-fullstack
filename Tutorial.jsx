@@ -404,7 +404,7 @@ To provedeme tím že ho odkážeme na odkaz /watch ALE ZÁROVEŇ PŘEDÁME OBJE
     
 
 /*
-T0) JAK NAKLONOVAT GIT PROJEKT 
+S0) JAK NAKLONOVAT GIT PROJEKT 
 
 a) Vytvoření branch (nebo použití main)
 b) tečkou na konci zvolíme že chceme kopii do nynějšího adresáře
@@ -412,7 +412,30 @@ b) tečkou na konci zvolíme že chceme kopii do nynějšího adresáře
  git clone --single-branc -b react-admin https://github.com/Svancik/admin-dashboard-FE.git .
 
 
-*/
+T0) JAK SKRZE <Link> PŘEDÁVAT DATA */
+
+{/*}
+ a) Mějme obyčejný link níže do kterého chceme přidat objekt
+ b) Abychom do nové komponenty / cesty přidali data, tak kód upravíme dle vzoru níe.} */} {}/
+
+<Link to={"/product/" + params.row._id}/>
+<Link to={"/movie/" + params.row._id} state={{ movie: params.row }}/>     
+
+//c) tyto data v nové komponentě zpřístupníme pomocí useLocation HOOKU.
+
+import { Link, useLocation } from "react-router-dom";
+
+const location = useLocation();
+const { movie } = location.state;
+console.log("movie:", movie);
+
+//hotovo!
+
+/*
+U0) JAK POUŽÍVAT FIREBASE K NAHRÁVÁNÍ SOUBORŮ A NAČÍTÁNÍ
+
+https://www.youtube.com/watch?v=tsNswx0nRKM&t=13161s&ab_channel=LamaDev
+
+3:40:00 VÝŠE
 
 
- 

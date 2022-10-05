@@ -32,13 +32,14 @@ router.post("/", verify, async (req,res) => {
     });
 
 //DELETE
-router.post("/:id", verify, async (req,res) => {
+router.delete("/:id", verify, async (req,res) => {
     if(req.user.isAdmin){
         try {
             await Movie.findByIdAndDelete(req.params.id)
             res.status(200).json("The movie has been deleted.");
         } catch (error) {
-            res.status(500).json(error);
+            
+            res.status(500).json(error).json(req.user.isAdmin);
         }
     } else{
         res.status(403).json("You are not allowed to update!");

@@ -40,8 +40,8 @@ router.post("/login", async (req, res) => {
         // pomocí user._doc získáme veškerá data (vlastnosti) z objektu až na ty které jsme si "vyzobli" = password níže
         const {password, ...info} = user._doc;
 
-        //po verifikaci hesla & username vložíme do JWT tokenu user._id & user.isAdmin => po 5 dnech nebude JWT validní => znovu login
-        const accessToken = jwt.sign({id: user._id, isAdmin: user.isAdmin}, process.env.SECRET_KEY,{expiresIn: "5d"});
+        //po verifikaci hesla & username vložíme do JWT tokenu user._id & user.isAdmin => po 7 dnech nebude JWT validní => znovu login
+        const accessToken = jwt.sign({id: user._id, isAdmin: user.isAdmin}, process.env.SECRET_KEY,{expiresIn: "70d"});
         //tento token přidáme k res.status(200).json pomocí spread operátoru - viz níže.
         console.log(accessToken);
         res.status(200).json({...info, accessToken});
