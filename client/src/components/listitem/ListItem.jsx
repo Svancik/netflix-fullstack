@@ -16,6 +16,8 @@ export default function ListItem({ index, item }) {
   const [movie, setMovie] = useState({});
   const navigate = useNavigate();
 
+  console.log("index: ", index, "item:", item);
+
   useEffect(() => {
     const getMovie = async () => {
       try {
@@ -43,7 +45,7 @@ export default function ListItem({ index, item }) {
       onMouseLeave={() => setIsHovered(false)}
     >
       {" "}
-      <img src={movie.img} alt="" />
+      <img src={movie.imgSm} alt="" />
       {isHovered && (
         <>
           <video src={movie.trailer} autoPlay={true} loop />

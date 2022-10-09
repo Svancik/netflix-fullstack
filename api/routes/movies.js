@@ -18,9 +18,10 @@ if(req.user.isAdmin){
 });
 
 //UPDATE
-router.post("/", verify, async (req,res) => {
+router.put("/:id", verify, async (req,res) => {
     if(req.user.isAdmin){
         try {
+            res.json("YOU ARE IN");
             const updatedMovie = await Movie.findByIdAndUpdate(req.params.id, {$set: req.body}, {new:true});
             res.status(200).json(updatedMovie);
         } catch (error) {
@@ -62,17 +63,36 @@ router.get("/random", verify, async (req,res) => {
     const type = req.query.type;
     let movie;
     try {
+        
         if(type === "series"){
             //pomocí mongoDB agregační fce najdeme filmy u kterých je shoda že mají isSeries: true => náhodně vygenerujeme seriál
             movie = await Movie.aggregate([
-                {$match: {isSeries: true}},
+                {$match: {
+                    $and:[
+                        {isSeries: true},
+                        {genre: "Anime"}
+                    ]
+                }},                        
                 {$sample: {size: 1}}
             ]); 
-        } else{
+        } else if (type === "series"){
             //pokud není isSeries true tak náhodně vygenerujeme film pomocí agregační fce => tento film bývá na úvodní stránce
             movie = await Movie.aggregate([
-                {$match: {isSeries: false}},
+                {$match: {
+                    $and:[
+                        {isSeries: false},
+                        {genre: "Anime"}
+                    ]
+                }},              
                 {$sample: {size: 1}},
+            ]);
+        }
+        else{
+            movie = await Movie.aggregate([
+                {$match: {              
+                        genre: "Anime"                   
+                }},              
+                {$sample: {size: 1}}
             ]);
         }
         res.status(200).json(movie);
