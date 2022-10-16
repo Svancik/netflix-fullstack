@@ -4,12 +4,15 @@ import {
   Search,
   WindowSharp,
 } from "@mui/icons-material";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import "./navbar.scss";
 import { Link } from "react-router-dom";
+import { AuthContext } from "./../../authContext/AuthContext";
+import { logout } from "../../authContext/AuthActions";
 
 export const Navbar = () => {
   const [isScrolled, setIsScroled] = useState(false);
+  const { dispatch } = useContext(AuthContext);
   window.onscroll = () => {
     setIsScroled(window.pageYOffset === 0 ? false : true);
     return () => (window.onscroll = null);
@@ -47,7 +50,7 @@ export const Navbar = () => {
             <ArrowDropDown className="icon" />
             <div className="options">
               <span>Settings</span>
-              <span>Logout</span>
+              <span onClick={() => dispatch(logout())}>Logout</span>
             </div>
           </div>
         </div>
