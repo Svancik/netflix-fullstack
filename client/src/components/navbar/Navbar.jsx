@@ -30,10 +30,10 @@ export const Navbar = () => {
             <span>Homepage</span>
           </Link>
           <Link to="/series" className="link">
-            <span>Series</span>
+            <span className="navbarMainLinks">Series</span>
           </Link>
           <Link to="/movies" className="link">
-            <span>Movies</span>
+            <span className="navbarMainLinks">Movies</span>
           </Link>
           <span>New and Popular</span>
           <span>My List</span>
