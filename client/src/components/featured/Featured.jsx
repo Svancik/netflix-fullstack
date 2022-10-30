@@ -59,7 +59,7 @@ export default function Featured({ type, setGenre }) {
           transcendental entity or law? Is it like the hand of God hovering
           above? At least it is true that man has no control, even over his own
           will...*/}
-        <img src={content.imgTitle} alt="" />
+        <img src={content.imgTitle} className="imgTitle" alt="" />
         <span className="desc">{content.desc}</span>
         <div className="buttons">
           <button className="play">

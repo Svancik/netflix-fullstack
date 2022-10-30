@@ -10,19 +10,27 @@ export default function List({ list }) {
   const [slideNumber, setSlideNumber] = useState(0);
   const [isMoved, setIsMoved] = useState(false);
   const [clickLimit, setClickLimit] = useState(window.innerWidth / 230);
+  console.log(
+    "click limit: ",
+    clickLimit,
+    " | listLength: ",
+    list.content.length,
+    "| počet kliků:",
+    list.content.length - clickLimit
+  );
   const listRef = useRef();
 
   const handleClick = (direction) => {
     setIsMoved(true);
     let distance = listRef.current.getBoundingClientRect().x - 50;
     if (direction === "left" && slideNumber > 0) {
-      /* pomocí useRef jsme si označili HTML element a měníme mu ve style "transform: translateX" pro posuv itemů v sidebaru */
-      listRef.current.style.transform = `translateX(${230 + distance}px)`;
-      /* při kliknutí na levou šipku ponížíme slideNumber ve state dokud se nedostaneme na 0 */
       setSlideNumber(slideNumber - 1);
+      listRef.current.style.transform = `translateX(${230 + distance}px)`;
     }
-
-    if (direction === "right" && slideNumber < 10 - clickLimit) {
+    if (
+      direction === "right" &&
+      slideNumber < list.content.length - clickLimit
+    ) {
       setSlideNumber(slideNumber + 1);
       listRef.current.style.transform = `translateX(${-230 + distance}px)`;
     }

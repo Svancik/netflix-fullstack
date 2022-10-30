@@ -29,6 +29,8 @@
         height: 100%;
         object-fit: cover;
     }
+
+
     
     .info{
         width: 35%;
@@ -39,9 +41,8 @@
         display: flex;
         flex-direction: column;
 
-        img{
-            width: 60vw;
-
+        .imgTitle{
+            width: 25vw;
         }
 
         .desc{

@@ -16,8 +16,6 @@ export default function ListItem({ index, item }) {
   const [movie, setMovie] = useState({});
   const navigate = useNavigate();
 
-  console.log("index: ", index, "item:", item);
-
   useEffect(() => {
     const getMovie = async () => {
       try {

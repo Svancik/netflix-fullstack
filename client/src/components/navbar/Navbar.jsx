@@ -22,12 +22,11 @@ export const Navbar = () => {
     <div className={isScrolled ? "navbar scrolled" : "navbar"}>
       <div className="container">
         <div className="left">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
-            alt=""
-          />
           <Link to="/" className="link">
-            <span>Homepage</span>
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
+              alt=""
+            />
           </Link>
           <Link to="/series" className="link">
             <span className="navbarMainLinks">Series</span>
@@ -35,8 +34,6 @@ export const Navbar = () => {
           <Link to="/movies" className="link">
             <span className="navbarMainLinks">Movies</span>
           </Link>
-          <span>New and Popular</span>
-          <span>My List</span>
         </div>
         <div className="right">
           <Search className="icon" />

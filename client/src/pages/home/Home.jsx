@@ -4,6 +4,7 @@ import "./home.scss";
 import List from "../../components/list/List";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Footer from "../../components/footer/Footer";
 
 const Home = ({ type }) => {
   const [lists, setLists] = useState([]);
@@ -34,9 +35,12 @@ const Home = ({ type }) => {
     <div className="home">
       <Navbar />
       <Featured type={type} setGenre={setGenre} />
-      {lists.map((list) => (
-        <List list={list} />
-      ))}
+      <div className="listsContainer">
+        {lists.map((list) => (
+          <List list={list} />
+        ))}
+      </div>
+      <Footer />
     </div>
   );
 };
